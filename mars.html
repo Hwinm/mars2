@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script> 
+    <script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script> 
+  <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-event-set-component@4.2.1/dist/aframe-event-set-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-teleport-controls@0.2.x/dist/aframe-teleport-controls.min.js"></script>
+<script src="https://unpkg.com/aframe-controller-cursor-component@0.2.x/dist/aframe-controller-cursor-component.min.js"></script>
+<script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/random-color.js"></script>
+<script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/snap.js"></script>
+<script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/intersection-spawn.js"></script>
+
+  </head>
+  <body>
+  <a-scene >
+    <a-assets>
+        <a-asset-item id ="mars-rover" src="scene.gltf"></a-asset-item>
+        <a-mixin id="voxel"
+        geometry="primitive: box; height: 0.5; width: 0.5; depth: 0.5"
+        material="shader: standard"
+        random-color
+        snap="offset: 0.25 0.25 0.25; snap: 0.5 0.5 0.5"
+     ></a-mixin>
+        <!--<a-asset-item id ="mars-rover-m" src="3d-model/Rover.mtl"></a-asset-item>
+        <a-asset-item id ="mars-rover-o" src="3d-model/Rover.obj"></a-asset-item>-->
+    </a-assets>
+    <!--<a-box 
+    color="#EF2D5E" 
+    position="0 1 -4" 
+    event-set__enter="_event: mouseenter; _target: #cylinderText; visible: true"
+    event-set__leave="_event: mouseleave; _target: #cylinderText; visible: false">
+    <a-text  id="cylinderText" value="GALAXY" align="center" color="#FFF" visible="false" position="0 -0.55 0.55"
+    material="color: #333" width="30"></a-text>
+  </a-box>-->
+  <a-entity id="teleHand" hand-controls="left" teleport-controls="type: parabolic; collisionEntities: [mixin='voxel'], #ground"></a-entity>
+  <a-entity id="blockHand" hand-controls="right" controller-cursor intersection-spawn="event: click; mixin: voxel"></a-entity>
+
+  <!-- Camera. -->
+  <a-camera>
+    <a-cursor intersection-spawn="event: click; mixin: voxel"></a-cursor>
+  </a-camera>
+    
+  <a-plane color="#CCC" height="5" width="5" position="2 0.1 4s" rotation="-90 0 0"></a-plane>
+  
+     
+      <a-entity id="env" environment="preset: yavapai; horizonColor: #FFCF9C; skyColor:#EF9535;"></a-entity>
+      <!--camera-->
+    
+   
+        <a-entity gltf-model="#mars-rover" 
+                  position ="0 0.2 0" 
+                  scale ="1 1 1"
+                  rotation="0 0 0">
+                 
+                  
+                  <a-text   value="HEY, MY NAME IS ROVER. 
+                  COULD YOU HELP ME BUILD A HOUSE?" align="center" color="#FFF" visible="true" position="0 1 0.2"
+                  material="color: #333" width="20" ></a-text>
+                  
+        </a-entity>
+      <!--animation__drive="dur:15000; from:10 0.4 0; to:-10 0.4 0; loop:-1; property: position"
+        animation="property: rotation; to: 0 360 0; loop: true; easing: linear; dur: 2000"  
+        event-set__enter="_event: mouseenter; _target: #cylinderText; visible: true"
+        event-set__leave="_event: mouseleave; _target: #cylinderText; visible: false"
+        <a-entity geometry="primitve: box; width:1; height:1; depth:1;" material="opacity: 0"> -->
+        
+  
+  </a-scene>
+
+  <script src="mars.js"></script>
+</body>
+
+ 
+</html>
