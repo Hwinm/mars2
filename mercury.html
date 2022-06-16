@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.2.0/aframe.js"></script> 
+    <script src="https://unpkg.com/aframe-vartiste-toolkit@1.31.0/vartiste-toolkit.js"></script>
+  
+
+  </head>
+  <body>
+  <a-scene >
+    <a-assets>
+        <a-asset-item id ="paint-stand" src="paint-stand/scene.gltf"></a-asset-item>
+        <img id="grass" src="images/grass.jpeg" crossorigin="anonymous" />
+
+    </a-assets>
+    icon-button="shader: matcap" 
+    renderer="colorManagement: true" 
+    xr-controllers-only="addUseControllerButton: true" 
+    spectator-camera="camera: #spectator-camera; state: SPECTATOR_CAMERA">
+
+    <!-- <a-entity position="0 0 0" camera look-controls wasd-controls="acceleration: 50">
+      <a-camera id="spectator-camera">
+        <a-cursor color="#333" maxDistance="30"></a-cursor>
+      </a-camera>
+    </a-entity> -->
+<!-- Lights -->
+<a-light type="directional" castShadow="true" intensity="0.6" color="#D0EAF9;" position="1 5 1"></a-light>
+<a-light intensity="0.9" type="ambient" color="#B4C5EC"></a-light>
+
+    <!--Adding the clickable class to anything makes it grabbable-->
+ 
+
+    <!--You can use some of the VARTISTE drawing tools, too!-->
+    <!--paintbrush-->
+    <a-entity 
+      position="0 1 1" 
+      rotation="90 0 0" 
+      scale="1 1 1" 
+      pencil-tool="" 
+      tooltip="Grabbable Pencil" 
+      set-brush="brushType: ImageBrush; image: #asset-lead-pencil; color: green; scale: 5"
+    ></a-entity>
+
+    <!--blank planet-->
+    <a-entity id="draw-canvas-demo" 
+      class="clickable" 
+      drawable="canvas:#draw-canvas-asset" 
+      geometry="primitive: plane; width: 1.6; height: 1.38" 
+      material="shader: flat; src: #draw-canvas-asset; npot: true" 
+      position="0 1.3 -0.02" 
+      rotation="-10 0 0"
+      tooltip="Draw Here" 
+      tooltip-style="offset: 0 0.75 0"
+    ></a-entity>
+
+    <!--color picker-->
+    <a-entity 
+      class="clickable" 
+      color-picker="" 
+      geometry="primitive: circle; radius: 1; height: 1.75" 
+      position="3 0.6 -0.02"
+    ></a-entity>
+
+    <!--undo changes-->
+    <a-entity 
+      icon-button="#asset-undo" 
+      tooltip="Undo" 
+      position="1 0.6 -0.02" 
+      geometry="primitive: plane; width: 0.2; height: 0.2" 
+      onclick="VARTISTE.Undo.undo()"
+    ></a-entity>
+
+    <!-- There's a few handy default constraints to restrict how things can be grabbed -->
+
+
+    <a-entity id="spectator-camera" camera="" position="0 0 0" rotation="0 0 0" camera-layers="layers: spectator"></a-entity>
+
+    <!--vartiste-user-root sets up the default laser pointer / mouse & keyboard interactions. If you want to define your own user setup, you'll want to make sure to include the manipulator components on both of the hand components to ensure that things can be grabbed and resized.-->
+    <a-entity vartiste-user-root=""></a-entity>
+
+    <a-sky color="#a3d0ed"></a-sky>
+    
+    <a-plane id="ground"
+    position="0 -1 -4" 
+    rotation="-90 0 0" 
+    width="100" 
+    height="100" 
+    color="#7BC8A4" 
+    material="src: #grass; repeat: 10 10"
+    shadow>
+  </a-plane> 
+
+  
+     
+  
+      <!--camera-->
+      
+        <a-entity position="0 0.01 3">
+            <a-camera>
+              <a-cursor></a-cursor>
+            </a-camera>
+        </a-entity>
+     
+        <a-entity gltf-model="#paint-stand" 
+                  position ="0 0.2 0" 
+                  scale ="0.5 0.5 0.5"></a-entity>
+           
+                  
+                
+                  <!--animation__drive="dur:15000; from:10 0.4 0; to:-10 0.4 0; loop:-1; property: position"-->
+        </a-entity>
+       
+        
+
+        
+  
+  </a-scene>
+
+ 
+</body>
+
+ 
+</html>
