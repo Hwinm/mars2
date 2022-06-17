@@ -19,7 +19,7 @@ function displayScore() {
 function createFish(){
   const clone = fishEl.cloneNode()
   clone.setAttribute("position", randomPosition())
-  clone.addEventListener('mouseenter', () => {
+  clone.addEventListener('gripdown', () => {
     score++;
     clone.dispatchEvent(new Event('collected'));
     displayScore();

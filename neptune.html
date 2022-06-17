@@ -5,12 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>MR Valentines</title>
-
+  <script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script> 
+  <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-event-set-component@4.2.1/dist/aframe-event-set-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-teleport-controls@0.2.x/dist/aframe-teleport-controls.min.js"></script>
+<script src="https://unpkg.com/aframe-controller-cursor-component@0.2.x/dist/aframe-controller-cursor-component.min.js"></script>
+<script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/random-color.js"></script>
+<script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/snap.js"></script>
+<script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/intersection-spawn.js"></script>
  
-
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+  <script src="https://unpkg.com/aframe-teleport-controls/dist/aframe-teleport-controls.min.js"></script>
+  <script src="https://gftruj.github.io/webzamples/aframe/controls/oculus-thumbstick-controls.js"></script>
+  <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+  <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script> 
   <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
 </head>
+<script>
+  AFRAME.registerComponent("input-listen", {
+      init: function () {
+          //X-button Pressed
+          this.el.addEventListener("xbuttondown", function (e) {
+              this.emit("teleportstart");
+          });
+
+          //X-button Released
+          this.el.addEventListener("xbuttonup", function (e) {
+              this.emit("teleportend");
+          });
+      }
+  });
+</script>
 <body>
   <a-scene fog="type: linear; color: #a3d0ed; near:5; far:20">
     <a-assets>
@@ -28,12 +54,26 @@
 <a-entity obj-model="obj: #island-o; mtl: #island-m" 
 position ="0 -3 0" 
 scale ="1.5 1.5 1.5"
-></a-entity>
+>
+</a-entity>
     <a-camera>
       <a-text id="score-element" value="Score" position="-0.35 0.5 -0.8"></a-text>
       <a-cursor></a-cursor>
     </a-camera>
     <a-entity laser-controls></a-entity>
+    <a-entity id="cameraRig">
+      
+      <a-entity id="head" camera wasd-controls look-controls position="0 1.6 0">
+      </a-entity>
+      <a-entity id="ctlL"
+          teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; startEvents: teleportstart; endEvents: teleportend"
+          raycaster="objects: .collidable; far:1.2;" laser-controls="hand: left" input-listen>
+          <a-text value="X: Teleport" position="0 0.05 0" rotation="-90 0 0" scale="0.1 0.1 0.1" align="center"
+              color="#FFFFFF"></a-text>
+      </a-entity>
+  
+      <a-entity laser-controls="hand: right" intersection-spawn= "event: click; entity: fish-model"></a-entity>
+  </a-entity>
     <!-- Ocean -->
 <a-box depth="50" width="200" height="1" color="#7AD2F7" position="0 0 0" ></a-ocean>
   </a-box>
